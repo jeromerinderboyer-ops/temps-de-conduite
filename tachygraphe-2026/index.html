@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suis-je concerné par le tachygraphe 2026 ? (utilitaires 2,5–3,5 t) — test gratuit</title>
+<meta name="description" content="Test gratuit en 3 questions : votre véhicule utilitaire est-il soumis à l'obligation de tachygraphe au 1er juillet 2026 ? Règle pour les vans 2,5–3,5 t en transport international ou cabotage.">
+<link rel="canonical" href="https://jeromerinderboyer-ops.github.io/temps-de-conduite/tachygraphe-2026/">
+<style>
+  :root{
+    --bg:#0f1720; --card:#172230; --ink:#eef3f8; --muted:#9fb0c3;
+    --accent:#2dd4bf; --warn:#f59e0b; --bad:#ef4444; --good:#22c55e; --line:#26384b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+  h1{font-size:1.5rem;margin:.2em 0 .1em}
+  .sub{color:var(--muted);margin:0 0 1.4em;font-size:.95rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+  .q{font-weight:600;margin:0 0 10px}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{display:block;width:100%;text-align:left;background:#0d1622;border:1px solid var(--line);color:var(--ink);
+    border-radius:10px;padding:13px 14px;font-size:1rem;cursor:pointer}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--accent);background:#0f2a28}
+  .step{margin-bottom:18px}
+  .step small{color:var(--muted);font-size:.8rem}
+  button.go{margin-top:6px;width:100%;background:var(--accent);color:#04201c;border:0;border-radius:10px;
+    padding:14px;font-size:1.05rem;font-weight:700;cursor:pointer}
+  button.go:disabled{opacity:.4;cursor:not-allowed}
+  .verdict{display:none;border-radius:14px;padding:18px;margin-bottom:16px;border:1px solid var(--line)}
+  .verdict.show{display:block}
+  .verdict h2{margin:.1em 0 .4em;font-size:1.25rem}
+  .v-bad{background:#2a1416;border-color:var(--bad)} .v-bad h2{color:var(--bad)}
+  .v-good{background:#0f2a18;border-color:var(--good)} .v-good h2{color:var(--good)}
+  .v-info{background:#1a2233;border-color:var(--accent)} .v-info h2{color:var(--accent)}
+  .verdict ul{margin:.4em 0 0;padding-left:1.1em} .verdict li{margin:.3em 0}
+  h2.sec{font-size:1.15rem;margin:1.6em 0 .4em}
+  .rules li{margin:.35em 0}
+  a{color:var(--accent)}
+  .cross{display:block;margin-top:8px;background:#0d1622;border:1px solid var(--line);border-radius:10px;padding:13px 14px;text-decoration:none;color:var(--ink)}
+  .cross b{color:var(--accent)}
+  .disc{font-size:.78rem;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Suis-je concerné par le tachygraphe 2026 ?</h1>
+  <p class="sub">Test en 3 questions pour les utilitaires de 2,5 à 3,5 t. Gratuit, sans inscription. (Réforme du 1ᵉʳ juillet 2026)</p>
+
+  <div class="card" id="form">
+    <div class="step">
+      <p class="q">1. Quel est le poids total autorisé en charge (PTAC) de votre véhicule ?</p>
+      <div class="opts" data-q="poids">
+        <button class="opt" data-v="moins25">Moins de 2,5 tonnes</button>
+        <button class="opt" data-v="entre">Entre 2,5 et 3,5 tonnes</button>
+        <button class="opt" data-v="plus35">Plus de 3,5 tonnes</button>
+      </div>
+    </div>
+    <div class="step">
+      <p class="q">2. Quel type de transport effectuez-vous ?</p>
+      <div class="opts" data-q="type">
+        <button class="opt" data-v="autrui">Marchandises pour compte d'autrui (transport rémunéré)</button>
+        <button class="opt" data-v="propre">Marchandises pour mon propre compte (compte propre)</button>
+        <button class="opt" data-v="autre">Autre (voyageurs, usage personnel…)</button>
+      </div>
+    </div>
+    <div class="step">
+      <p class="q">3. Roulez-vous à l'international ou en cabotage ?</p>
+      <small>International = passage d'une frontière. Cabotage = livraison à l'intérieur d'un autre pays de l'UE.</small>
+      <div class="opts" data-q="zone" style="margin-top:8px">
+        <button class="opt" data-v="inter">Oui, international et/ou cabotage</button>
+        <button class="opt" data-v="national">Non, uniquement national (dans mon pays)</button>
+      </div>
+    </div>
+    <button class="go" id="go" disabled onclick="verdict()">Voir si je suis concerné</button>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+
+  <h2 class="sec">Ce qui change le 1ᵉʳ juillet 2026</h2>
+  <ul class="rules">
+    <li>Jusqu'ici, le tachygraphe ne concernait (pour les marchandises) que les véhicules <b>de plus de 3,5 t</b>.</li>
+    <li>À partir du <b>1ᵉʳ juillet 2026</b>, les <b>utilitaires de 2,5 à 3,5 t</b> qui font du <b>transport international de marchandises ou du cabotage pour compte d'autrui</b> doivent être équipés d'un <b>tachygraphe intelligent de 2ᵉ génération</b> et respecter les règles de temps de conduite et de repos.</li>
+    <li>Le <b>transport purement national</b> en véhicule de moins de 3,5 t <b>reste hors champ</b>.</li>
+    <li>Une fois concerné : pose du tachygraphe en atelier agréé, téléchargement régulier des données (carte conducteur, mémoire véhicule), archivage, et respect des limites (9 h/jour, pause 4 h 30, repos 11 h…).</li>
+  </ul>
+
+  <a class="cross" href="../">➗ <b>Outil lié :</b> Calculateur de temps de conduite et de repos →</a>
+
+  <div class="disc">
+    ⚠️ Test <b>informatif</b> et simplifié, pour vous orienter. Il ne couvre pas tous les cas particuliers (dérogations, transport de personnes, usages spécifiques). En cas de doute, vérifiez auprès de la réglementation officielle ou d'un conseil spécialisé.
+  </div>
+</div>
+
+<script>
+var ans={poids:null,type:null,zone:null};
+document.querySelectorAll('.opts').forEach(function(group){
+  group.addEventListener('click',function(e){
+    var b=e.target.closest('.opt'); if(!b)return;
+    var q=group.getAttribute('data-q');
+    group.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
+    b.classList.add('sel');
+    ans[q]=b.getAttribute('data-v');
+    document.getElementById('go').disabled=!(ans.poids&&ans.type&&ans.zone);
+  });
+});
+
+function show(cls,title,lines){
+  var v=document.getElementById('verdict');
+  v.className='verdict show '+cls;
+  v.innerHTML='<h2>'+title+'</h2><ul>'+lines.map(function(l){return '<li>'+l+'</li>';}).join('')+'</ul>';
+  v.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function verdict(){
+  if(ans.poids==='moins25'){
+    return show('v-good','Non concerné',[
+      'Votre véhicule fait <b>moins de 2,5 t</b> : il reste <b>sous le seuil</b> de la nouvelle obligation, même à l\'international.',
+      'Rien à installer au titre de la réforme 2026.']);
+  }
+  if(ans.poids==='plus35'){
+    return show('v-info','Déjà soumis (avant 2026)',[
+      'Un véhicule de <b>plus de 3,5 t</b> en transport de marchandises est <b>déjà soumis</b> au tachygraphe et aux règles de temps de conduite, indépendamment de la réforme 2026.',
+      'Le changement de juillet 2026 vise surtout les utilitaires plus légers — vous, vous êtes déjà dans le cadre.']);
+  }
+  // 2,5 - 3,5 t
+  if(ans.type!=='autrui'){
+    return show('v-good','A priori non concerné',[
+      'La nouvelle obligation vise le <b>transport de marchandises pour compte d\'autrui</b> (rémunéré). Votre cas (compte propre / autre) n\'entre en principe pas dans ce champ précis.',
+      '⚠️ Des règles particulières peuvent s\'appliquer selon votre activité — à vérifier si vous avez un doute.']);
+  }
+  if(ans.zone==='inter'){
+    return show('v-bad','Oui, vous êtes concerné',[
+      'Utilitaire <b>2,5–3,5 t</b> + <b>marchandises pour compte d\'autrui</b> + <b>international ou cabotage</b> → soumis à l\'obligation <b>dès le 1ᵉʳ juillet 2026</b>.',
+      'À prévoir : <b>tachygraphe intelligent 2</b> posé en atelier agréé, téléchargement et archivage réguliers des données, et respect des temps de conduite/repos.',
+      'Anticipez : prenez rendez-vous en atelier tôt, et formez vos conducteurs aux règles.']);
+  }
+  return show('v-good','Non concerné par l\'obligation 2026',[
+    'Utilitaire 2,5–3,5 t mais <b>uniquement en transport national</b> : la nouvelle obligation tachygraphe <b>ne s\'applique pas</b> (le national en moins de 3,5 t reste hors champ).',
+    'Attention : si vous commencez un jour l\'international ou le cabotage, vous y serez soumis.']);
+}
+</script>
+</body>
+</html>

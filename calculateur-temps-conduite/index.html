@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculateur de temps de conduite et de repos (règles UE 561/2006) — gratuit</title>
+<meta name="description" content="Calculez gratuitement votre temps de conduite restant, votre prochaine pause obligatoire et votre repos journalier selon la réglementation européenne 561/2006. Outil simple pour chauffeurs et petits transporteurs.">
+<link rel="canonical" href="https://jeromerinderboyer-ops.github.io/temps-de-conduite/calculateur-temps-conduite/">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+  <p class="nav"><a href="../">← Tous les outils</a></p>
+  <h1>Calculateur de temps de conduite et de repos</h1>
+  <p class="sub">Règlement européen (CE) n° 561/2006 — pour chauffeurs et petits transporteurs. Gratuit, sans inscription.</p>
+
+  <div class="card">
+    <div class="row">
+      <div class="fld">
+        <label for="dh">Conduite aujourd'hui — heures</label>
+        <input id="dh" type="number" min="0" max="15" value="0" inputmode="numeric">
+      </div>
+      <div class="fld">
+        <label for="dm">… et minutes</label>
+        <input id="dm" type="number" min="0" max="59" value="0" inputmode="numeric">
+      </div>
+    </div>
+    <div class="row">
+      <div class="fld">
+        <label for="ch">Conduite depuis la dernière pause de 45 min — heures</label>
+        <input id="ch" type="number" min="0" max="10" value="0" inputmode="numeric">
+      </div>
+      <div class="fld">
+        <label for="cm">… et minutes</label>
+        <input id="cm" type="number" min="0" max="59" value="0" inputmode="numeric">
+      </div>
+    </div>
+    <div class="row">
+      <div class="fld">
+        <label for="ext">Journées de conduite « étendue » (10 h) déjà utilisées cette semaine</label>
+        <select id="ext">
+          <option value="0">0 (j'en ai encore 2 dispo)</option>
+          <option value="1">1 (encore 1 dispo)</option>
+          <option value="2">2 (plus dispo cette semaine)</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label for="wk">Conduite déjà faite cette semaine — heures (optionnel)</label>
+        <input id="wk" type="number" min="0" max="56" value="0" inputmode="numeric">
+      </div>
+    </div>
+    <button class="btn" onclick="calc()">Calculer</button>
+  </div>
+
+  <div id="res" class="res">
+    <div class="card">
+      <div id="pause" class="stat"></div>
+      <div id="jour" class="stat"></div>
+      <div id="hebdo" class="stat"></div>
+      <div id="repos" class="stat"></div>
+      <p class="note" id="resume"></p>
+    </div>
+  </div>
+
+  <h2 class="sec">Les règles, simplement</h2>
+  <ul class="rules">
+    <li><b>Pause :</b> après <b>4 h 30</b> de conduite, une pause de <b>45 min</b> est obligatoire (fractionnable en 15 min puis 30 min, dans cet ordre).</li>
+    <li><b>Conduite journalière :</b> <b>9 h</b> maximum, portée à <b>10 h</b> deux fois par semaine seulement.</li>
+    <li><b>Conduite hebdomadaire :</b> <b>56 h</b> maximum ; et <b>90 h</b> maximum sur deux semaines consécutives.</li>
+    <li><b>Repos journalier :</b> <b>11 h</b> consécutives, réductible à <b>9 h</b> trois fois maximum entre deux repos hebdomadaires.</li>
+    <li><b>Repos hebdomadaire :</b> <b>45 h</b>, réductible à <b>24 h</b> avec compensation ultérieure.</li>
+  </ul>
+
+  <a class="cross" href="../tachygraphe-2026/">❓ <b>Test lié :</b> Suis-je concerné par le tachygraphe 2026 ? →</a>
+  <a class="cross" href="../repos-hebdomadaire/">🛏️ <b>Outil lié :</b> Repos hebdomadaire : quand et combien ? →</a>
+
+  <div class="disc">
+    ⚠️ Outil <b>informatif</b>, fourni à titre indicatif pour vous aider à anticiper. Il ne remplace pas le tachygraphe ni un conseil juridique, et ne couvre pas tous les cas particuliers (double équipage, dérogations, transport de voyageurs…). Vérifiez toujours auprès de la réglementation officielle.
+  </div>
+</div>
+
+<script>
+function toMin(h,m){return (parseInt(h||0,10)*60)+parseInt(m||0,10);}
+function fmt(min){if(min<0)min=0;var h=Math.floor(min/60),m=min%60;return ((h>0?h+' h ':'')+(m>0||h===0?m+' min':'')).trim();}
+function setStat(id,cls,label,value,sub){
+  document.getElementById(id).innerHTML='<div><b>'+label+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div><div class="v '+cls+'">'+value+'</div>';
+}
+function calc(){
+  var jour=toMin(dh.value,dm.value);
+  var cont=toMin(ch.value,cm.value);
+  var ext=parseInt(document.getElementById('ext').value,10);
+  var wk=parseInt(document.getElementById('wk').value||0,10)*60;
+
+  var avantPause=270-cont;
+  if(avantPause<=0) setStat('pause','bd','Pause obligatoire','MAINTENANT','Vous avez atteint 4 h 30 de conduite continue → 45 min de pause');
+  else setStat('pause', avantPause<=45?'wn':'ok','Avant la pause de 45 min', fmt(avantPause), 'Conduite continue restante avant pause obligatoire');
+
+  var limite = ext<2 ? 600 : 540;
+  var resteJour = limite-jour;
+  var subJour = ext<2 ? 'Limite 9 h, extensible à 10 h ('+(2-ext)+' restante(s) cette semaine)' : 'Limite 9 h (plus d\'extension dispo)';
+  setStat('jour', resteJour<=0?'bd':(resteJour<=60?'wn':'ok'), 'Conduite restante aujourd\'hui', resteJour<=0?'0 — limite atteinte':fmt(resteJour), subJour);
+
+  var resteHebdo=3360-(wk+jour);
+  setStat('hebdo', resteHebdo<=0?'bd':(resteHebdo<=180?'wn':'ok'), 'Conduite restante cette semaine', resteHebdo<=0?'0 — limite 56 h atteinte':fmt(resteHebdo), 'Plafond hebdomadaire 56 h');
+
+  setStat('repos','ok','Repos journalier requis','11 h','Réductible à 9 h, 3 fois max entre 2 repos hebdo');
+
+  var dispo=Math.max(0,Math.min(resteJour,resteHebdo,avantPause<=0?0:avantPause));
+  var resume;
+  if(avantPause<=0) resume='➡️ Stop : prenez votre pause de 45 min avant de repartir.';
+  else if(dispo<=0) resume='➡️ Vous avez atteint une limite — repos requis avant de reconduire.';
+  else resume='➡️ Vous pouvez encore conduire environ '+fmt(dispo)+' avant la prochaine contrainte.';
+  document.getElementById('resume').textContent=resume;
+
+  document.getElementById('res').classList.add('show');
+  document.getElementById('res').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

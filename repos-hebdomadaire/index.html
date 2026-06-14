@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repos hebdomadaire : quand et combien ? (règles UE 561/2006) — calculateur gratuit</title>
+<meta name="description" content="Calculez gratuitement la date limite de votre prochain repos hebdomadaire (maximum 6 périodes de 24 h) et la durée requise : 45 h normal, 24 h réduit avec compensation. Règles UE 561/2006.">
+<link rel="canonical" href="https://jeromerinderboyer-ops.github.io/temps-de-conduite/repos-hebdomadaire/">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+  <p class="nav"><a href="../">← Tous les outils</a></p>
+  <h1>Repos hebdomadaire : quand et combien ?</h1>
+  <p class="sub">À partir de la fin de votre dernier repos hebdomadaire, calculez la date limite du prochain. Règlement (CE) 561/2006. Gratuit.</p>
+
+  <div class="card">
+    <label for="fin">Date et heure de FIN de votre dernier repos hebdomadaire</label>
+    <input id="fin" type="datetime-local">
+    <label for="type">Ce dernier repos hebdomadaire était…</label>
+    <select id="type">
+      <option value="normal">Normal (au moins 45 h)</option>
+      <option value="reduit">Réduit (entre 24 h et 45 h)</option>
+    </select>
+    <button class="btn" onclick="calc()">Calculer</button>
+  </div>
+
+  <div id="res" class="res">
+    <div class="card">
+      <div id="deadline" class="stat"></div>
+      <div id="duree" class="stat"></div>
+      <div id="comp" class="stat"></div>
+      <p class="note" id="resume"></p>
+    </div>
+  </div>
+
+  <h2 class="sec">Les règles, simplement</h2>
+  <ul class="rules">
+    <li><b>Délai maximum :</b> un nouveau repos hebdomadaire doit être pris après <b>6 périodes de 24 h</b> au plus (soit 144 h) depuis la fin du précédent.</li>
+    <li><b>Repos normal :</b> au moins <b>45 h</b> consécutives.</li>
+    <li><b>Repos réduit :</b> minimum <b>24 h</b> — mais sur deux semaines consécutives, il faut au moins <b>un repos normal de 45 h</b>.</li>
+    <li><b>Compensation :</b> toute réduction (la différence entre 45 h et le repos réduit pris) doit être <b>récupérée en bloc</b> avant la fin de la <b>3ᵉ semaine</b> suivante, rattachée à un repos d'au moins 9 h.</li>
+  </ul>
+
+  <a class="cross" href="../calculateur-temps-conduite/">⏱️ <b>Outil lié :</b> Calculateur de temps de conduite et de repos →</a>
+  <a class="cross" href="../tachygraphe-2026/">❓ <b>Test lié :</b> Suis-je concerné par le tachygraphe 2026 ? →</a>
+
+  <div class="disc">
+    ⚠️ Outil <b>informatif</b> et simplifié, fourni à titre indicatif. Il ne couvre pas tous les cas particuliers (double équipage, dérogations, repos hebdomadaires fractionnés…). Vérifiez toujours auprès de la réglementation officielle.
+  </div>
+</div>
+
+<script>
+function setStat(id,cls,label,value,sub){
+  document.getElementById(id).innerHTML='<div><b>'+label+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div><div class="v '+cls+'">'+value+'</div>';
+}
+function calc(){
+  var v=document.getElementById('fin').value;
+  if(!v){ alert('Indiquez la date et l\'heure de fin de votre dernier repos hebdomadaire.'); return; }
+  var start=new Date(v);
+  var deadline=new Date(start.getTime()+144*3600*1000); // 6 x 24 h
+  var opts={weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'};
+  var txt=deadline.toLocaleString('fr-FR',opts);
+
+  setStat('deadline','wn','Prochain repos hebdo au plus tard', txt, 'Au maximum 6 périodes de 24 h après la fin du précédent');
+
+  var type=document.getElementById('type').value;
+  if(type==='reduit'){
+    setStat('duree','ok','Durée du prochain repos','45 h','Après un repos réduit, le suivant doit être normal (45 h) sur 2 semaines consécutives');
+    setStat('comp','wn','Compensation due','Oui','La réduction (45 h − durée prise) est à récupérer en bloc avant la fin de la 3ᵉ semaine suivante');
+  } else {
+    setStat('duree','ok','Durée minimale','24 h ou 45 h','45 h (normal) ou 24 h (réduit, à compenser)');
+    setStat('comp','ok','Compensation due','Non','Le dernier repos était normal');
+  }
+
+  // jours/heures restants
+  var now=new Date();
+  var ms=deadline-now;
+  var resume;
+  if(isNaN(start.getTime())){ resume=''; }
+  else if(ms<=0){ resume='➡️ Le délai est dépassé : un repos hebdomadaire est requis dès que possible.'; }
+  else {
+    var h=Math.floor(ms/3600000); var d=Math.floor(h/24); var hr=h%24;
+    resume='➡️ Il vous reste environ '+(d>0?d+' j ':'')+hr+' h avant la date limite.';
+  }
+  document.getElementById('resume').textContent=resume;
+
+  document.getElementById('res').classList.add('show');
+  document.getElementById('res').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

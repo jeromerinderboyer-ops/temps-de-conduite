@@ -3,159 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calculateur de temps de conduite et de repos (règles UE 561/2006) — gratuit</title>
-<meta name="description" content="Calculez gratuitement votre temps de conduite restant, votre prochaine pause obligatoire et votre repos journalier selon la réglementation européenne 561/2006. Outil simple pour chauffeurs et petits transporteurs.">
-<style>
-  :root{
-    --bg:#0f1720; --card:#172230; --ink:#eef3f8; --muted:#9fb0c3;
-    --accent:#2dd4bf; --warn:#f59e0b; --bad:#ef4444; --good:#22c55e; --line:#26384b;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
-  h1{font-size:1.5rem;margin:.2em 0 .1em}
-  .sub{color:var(--muted);margin:0 0 1.4em;font-size:.95rem}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
-  label{display:block;font-size:.9rem;color:var(--muted);margin:14px 0 6px}
-  .row{display:flex;gap:10px;flex-wrap:wrap}
-  .row .fld{flex:1;min-width:120px}
-  input,select{width:100%;background:#0d1622;border:1px solid var(--line);color:var(--ink);
-    border-radius:10px;padding:11px 12px;font-size:1rem}
-  input:focus,select:focus{outline:2px solid var(--accent);border-color:transparent}
-  button{margin-top:18px;width:100%;background:var(--accent);color:#04201c;border:0;border-radius:10px;
-    padding:14px;font-size:1.05rem;font-weight:700;cursor:pointer}
-  button:active{transform:translateY(1px)}
-  .res{display:none;margin-top:4px}
-  .res.show{display:block}
-  .stat{display:flex;justify-content:space-between;align-items:center;gap:12px;
-    padding:13px 14px;border-radius:10px;background:#0d1622;border:1px solid var(--line);margin-bottom:10px}
-  .stat .v{font-weight:800;font-size:1.15rem;white-space:nowrap}
-  .stat small{display:block;color:var(--muted);font-weight:400;font-size:.78rem}
-  .ok{color:var(--good)} .wn{color:var(--warn)} .bd{color:var(--bad)}
-  .note{font-size:.82rem;color:var(--muted)}
-  details{margin-top:10px;border-top:1px solid var(--line);padding-top:12px}
-  summary{cursor:pointer;font-weight:600}
-  h2{font-size:1.15rem;margin:1.6em 0 .4em}
-  .rules li{margin:.35em 0}
-  .disc{font-size:.78rem;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:22px}
-  a{color:var(--accent)}
-</style>
+<title>Temps de Conduite — outils gratuits pour chauffeurs et petits transporteurs</title>
+<meta name="description" content="Outils gratuits pour les conducteurs et petits transporteurs : calculateur de temps de conduite et de repos, test tachygraphe 2026, repos hebdomadaire. Règles UE 561/2006, sans inscription.">
+<link rel="canonical" href="https://jeromerinderboyer-ops.github.io/temps-de-conduite/">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="wrap">
-  <h1>Calculateur de temps de conduite et de repos</h1>
-  <p class="sub">Règlement européen (CE) n° 561/2006 — pour chauffeurs et petits transporteurs. Gratuit, sans inscription.</p>
+  <span class="badge">Gratuit · sans inscription</span>
+  <h1>Temps de Conduite</h1>
+  <p class="sub">Les outils simples et gratuits des conducteurs et petits transporteurs. Règles européennes (CE) 561/2006, expliquées clairement.</p>
 
-  <div class="card">
-    <div class="row">
-      <div class="fld">
-        <label for="dh">Conduite aujourd'hui — heures</label>
-        <input id="dh" type="number" min="0" max="15" value="0" inputmode="numeric">
-      </div>
-      <div class="fld">
-        <label for="dm">… et minutes</label>
-        <input id="dm" type="number" min="0" max="59" value="0" inputmode="numeric">
-      </div>
-    </div>
-    <div class="row">
-      <div class="fld">
-        <label for="ch">Conduite depuis la dernière pause de 45 min — heures</label>
-        <input id="ch" type="number" min="0" max="10" value="0" inputmode="numeric">
-      </div>
-      <div class="fld">
-        <label for="cm">… et minutes</label>
-        <input id="cm" type="number" min="0" max="59" value="0" inputmode="numeric">
-      </div>
-    </div>
-    <div class="row">
-      <div class="fld">
-        <label for="ext">Journées de conduite « étendue » (10 h) déjà utilisées cette semaine</label>
-        <select id="ext">
-          <option value="0">0 (j'en ai encore 2 dispo)</option>
-          <option value="1">1 (encore 1 dispo)</option>
-          <option value="2">2 (plus dispo cette semaine)</option>
-        </select>
-      </div>
-      <div class="fld">
-        <label for="wk">Conduite déjà faite cette semaine — heures (optionnel)</label>
-        <input id="wk" type="number" min="0" max="56" value="0" inputmode="numeric">
-      </div>
-    </div>
-    <button onclick="calc()">Calculer</button>
+  <div class="tools">
+    <a class="tool" href="calculateur-temps-conduite/">
+      <h3>⏱️ Calculateur de temps de conduite et de repos</h3>
+      <p>Combien de temps puis-je encore rouler ? Quand est ma pause ? Quel repos ce soir ? Réponse en quelques secondes.</p>
+    </a>
+    <a class="tool" href="tachygraphe-2026/">
+      <h3>❓ Suis-je concerné par le tachygraphe 2026 ?</h3>
+      <p>Test en 3 questions pour les utilitaires de 2,5 à 3,5 t. La nouvelle obligation du 1ᵉʳ juillet 2026 vous concerne-t-elle ?</p>
+    </a>
+    <a class="tool" href="repos-hebdomadaire/">
+      <h3>🛏️ Repos hebdomadaire : quand et combien ?</h3>
+      <p>À partir de votre dernier repos, calculez la date limite du prochain et la durée requise (45 h / 24 h, compensation).</p>
+    </a>
   </div>
 
-  <div id="res" class="res">
-    <div class="card">
-      <div id="pause" class="stat"></div>
-      <div id="jour" class="stat"></div>
-      <div id="hebdo" class="stat"></div>
-      <div id="repos" class="stat"></div>
-      <p class="note" id="resume"></p>
-    </div>
-  </div>
-
-  <h2>Les règles, simplement</h2>
-  <ul class="rules">
-    <li><b>Pause :</b> après <b>4 h 30</b> de conduite, une pause de <b>45 min</b> est obligatoire (fractionnable en 15 min puis 30 min, dans cet ordre).</li>
-    <li><b>Conduite journalière :</b> <b>9 h</b> maximum, portée à <b>10 h</b> deux fois par semaine seulement.</li>
-    <li><b>Conduite hebdomadaire :</b> <b>56 h</b> maximum ; et <b>90 h</b> maximum sur deux semaines consécutives.</li>
-    <li><b>Repos journalier :</b> <b>11 h</b> consécutives, réductible à <b>9 h</b> trois fois maximum entre deux repos hebdomadaires.</li>
-    <li><b>Repos hebdomadaire :</b> <b>45 h</b>, réductible à <b>24 h</b> avec compensation ultérieure.</li>
-  </ul>
-
-  <details>
-    <summary>Qui est concerné ? (et la nouveauté du 1ᵉʳ juillet 2026)</summary>
-    <p class="note">Ces règles s'appliquent à la plupart des transports de marchandises par véhicule &gt; 3,5 t. <b>Nouveauté :</b> depuis le 1ᵉʳ juillet 2026, les <b>utilitaires de 2,5 à 3,5 t</b> effectuant du <b>transport international ou du cabotage pour compte d'autrui</b> y sont aussi soumis et doivent être équipés d'un tachygraphe intelligent. Le transport purement national en véhicule &lt; 3,5 t reste hors champ.</p>
-  </details>
-
-  <a href="tachygraphe-2026/" style="display:block;margin-top:8px;background:#0d1622;border:1px solid var(--line);border-radius:10px;padding:13px 14px;text-decoration:none;color:var(--ink)">❓ <b style="color:var(--accent)">Test lié :</b> Suis-je concerné par le tachygraphe 2026 ? →</a>
+  <h2 class="sec">Pourquoi ce site ?</h2>
+  <p class="note">Les règles de temps de conduite sont strictes, et les contrôles de plus en plus automatisés. Ces outils gratuits aident les conducteurs et les petites structures à s'y retrouver sans payer un logiciel complexe. On ajoute régulièrement de nouveaux outils — revenez bientôt.</p>
 
   <div class="disc">
-    ⚠️ Outil <b>informatif</b>, fourni à titre indicatif pour vous aider à anticiper. Il ne remplace pas le tachygraphe ni un conseil juridique, et ne couvre pas tous les cas particuliers (double équipage, dérogations, transport de voyageurs…). Vérifiez toujours auprès de la réglementation officielle.
+    ⚠️ Outils <b>informatifs</b>, fournis à titre indicatif. Ils ne remplacent pas le tachygraphe ni un conseil juridique et ne couvrent pas tous les cas particuliers (double équipage, dérogations, transport de voyageurs…). Vérifiez toujours auprès de la réglementation officielle.
   </div>
 </div>
-
-<script>
-function toMin(h,m){return (parseInt(h||0,10)*60)+parseInt(m||0,10);}
-function fmt(min){if(min<0)min=0;var h=Math.floor(min/60),m=min%60;return (h>0?h+' h ':'')+(m>0||h===0?m+' min':'').trim();}
-function setStat(id,cls,label,value,sub){
-  document.getElementById(id).innerHTML='<div><b>'+label+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div><div class="v '+cls+'">'+value+'</div>';
-}
-function calc(){
-  var jour=toMin(dh.value,dm.value);
-  var cont=toMin(ch.value,cm.value);
-  var ext=parseInt(document.getElementById('ext').value,10);
-  var wk=parseInt(document.getElementById('wk').value||0,10)*60;
-
-  // Pause obligatoire
-  var avantPause=270-cont; // 4h30 = 270 min
-  if(avantPause<=0) setStat('pause','bd','Pause obligatoire','MAINTENANT','Vous avez atteint 4 h 30 de conduite continue → 45 min de pause');
-  else setStat('pause', avantPause<=45?'wn':'ok','Avant la pause de 45 min', fmt(avantPause), 'Conduite continue restante avant pause obligatoire');
-
-  // Limite journalière
-  var limite = ext<2 ? 600 : 540; // 10h si extension dispo, sinon 9h
-  var resteJour = limite-jour;
-  var subJour = ext<2 ? 'Limite 9 h, extensible à 10 h ('+(2-ext)+' restante(s) cette semaine)' : 'Limite 9 h (plus d\'extension dispo)';
-  setStat('jour', resteJour<=0?'bd':(resteJour<=60?'wn':'ok'), 'Conduite restante aujourd\'hui', resteJour<=0?'0 — limite atteinte':fmt(resteJour), subJour);
-
-  // Hebdo
-  var resteHebdo=3360-(wk+jour); // 56h = 3360
-  setStat('hebdo', resteHebdo<=0?'bd':(resteHebdo<=180?'wn':'ok'), 'Conduite restante cette semaine', resteHebdo<=0?'0 — limite 56 h atteinte':fmt(resteHebdo), 'Plafond hebdomadaire 56 h');
-
-  // Repos
-  setStat('repos','ok','Repos journalier requis','11 h','Réductible à 9 h, 3 fois max entre 2 repos hebdo');
-
-  // Résumé : le plus contraignant
-  var dispo=Math.max(0,Math.min(resteJour,resteHebdo,avantPause<=0?0:avantPause));
-  var resume;
-  if(avantPause<=0) resume='➡️ Stop : prenez votre pause de 45 min avant de repartir.';
-  else if(dispo<=0) resume='➡️ Vous avez atteint une limite — repos requis avant de reconduire.';
-  else resume='➡️ Vous pouvez encore conduire environ '+fmt(dispo)+' avant la prochaine contrainte.';
-  document.getElementById('resume').textContent=resume;
-
-  document.getElementById('res').classList.add('show');
-  document.getElementById('res').scrollIntoView({behavior:'smooth',block:'start'});
-}
-</script>
 </body>
 </html>

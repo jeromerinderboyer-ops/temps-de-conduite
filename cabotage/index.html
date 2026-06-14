@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Règles du cabotage 2026 : 3 opérations, 7 jours, carence 4 jours (calculateur)</title>
+<meta name="description" content="Comprendre le cabotage routier en 2026 : maximum 3 opérations dans les 7 jours après un transport international, puis 4 jours de carence. Calculez votre date limite gratuitement. Paquet Mobilité UE.">
+<link rel="canonical" href="https://jeromerinderboyer-ops.github.io/temps-de-conduite/cabotage/">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+  <p class="nav"><a href="../">← Tous les outils</a></p>
+  <h1>Règles du cabotage routier (2026)</h1>
+  <p class="sub">Combien d'opérations, dans quel délai, et la période de carence. Paquet Mobilité UE. Avec un calculateur de date limite.</p>
+
+  <div class="card">
+    <label for="dech">Date du déchargement de votre transport international entrant</label>
+    <input id="dech" type="date">
+    <button class="btn" onclick="calc()">Calculer ma fenêtre de cabotage</button>
+    <div id="res" class="res">
+      <div id="fin" class="stat" style="margin-top:14px"></div>
+      <div id="carence" class="stat"></div>
+      <p class="note" id="resume"></p>
+    </div>
+  </div>
+
+  <h2 class="sec">Les règles, simplement</h2>
+  <ul class="rules">
+    <li><b>3 opérations maximum :</b> après un transport international entrant (marchandises déchargées dans le pays), vous pouvez réaliser <b>au plus 3 opérations de cabotage</b>.</li>
+    <li><b>Dans les 7 jours :</b> ces 3 opérations doivent être faites <b>dans un délai de 7 jours</b> à compter du déchargement international.</li>
+    <li><b>Carence de 4 jours :</b> ensuite, il faut attendre <b>4 jours</b> avant de pouvoir à nouveau caboter dans <b>le même pays avec le même véhicule</b> (règle anti-cabotage systématique).</li>
+    <li><b>Nouveau en 2026 :</b> depuis le 1ᵉʳ juillet 2026, ces règles (et le tachygraphe) s'étendent aux <b>utilitaires de plus de 2,5 t</b> en international/cabotage, contre +3,5 t auparavant.</li>
+  </ul>
+
+  <a class="cross" href="../tachygraphe-2026/">❓ <b>Test lié :</b> Suis-je concerné par le tachygraphe 2026 ? →</a>
+  <a class="cross" href="../calculateur-temps-conduite/">⏱️ <b>Outil lié :</b> Calculateur de temps de conduite et de repos →</a>
+
+  <div class="disc">
+    ⚠️ Page <b>informative</b> et simplifiée. Le cabotage comporte des subtilités (cabotage « croisé », justificatifs CMR, opérations multi-pays…). Vérifiez toujours auprès de la réglementation officielle ou d'un conseil spécialisé.
+  </div>
+</div>
+
+<script>
+function fmtDate(d){return d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function setStat(id,cls,label,value,sub){
+  document.getElementById(id).innerHTML='<div><b>'+label+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</div><div class="v '+cls+'">'+value+'</div>';
+}
+function calc(){
+  var v=document.getElementById('dech').value;
+  if(!v){ alert('Indiquez la date de déchargement de votre transport international.'); return; }
+  var d=new Date(v+'T12:00:00');
+  var fin=new Date(d.getTime()+7*86400000);
+  var finCarence=new Date(fin.getTime()+4*86400000);
+  setStat('fin','wn','Vos 3 opérations doivent être finies avant le', fmtDate(fin), '7 jours après le déchargement international');
+  setStat('carence','ok','Nouveau cabotage possible (même pays/véhicule) à partir du', fmtDate(finCarence), 'Après 4 jours de carence');
+  document.getElementById('resume').textContent='➡️ Fenêtre des 3 opérations : du déchargement au '+fmtDate(fin)+'. Puis 4 jours sans caboter dans ce pays avec ce véhicule.';
+  document.getElementById('res').classList.add('show');
+}
+</script>
+<script data-goatcounter="https://tempsdeconduite.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

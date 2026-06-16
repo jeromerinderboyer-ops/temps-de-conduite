@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jeromerinderboyer-ops.github.io/temps-de-conduite/sitemap.xml
+Sitemap: https://projet-outils.github.io/temps-de-conduite/sitemap.xml

@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jeromerinderboyer-ops.github.io/temps-de-conduite/</loc>
+    <loc>https://projet-outils.github.io/temps-de-conduite/</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://jeromerinderboyer-ops.github.io/temps-de-conduite/calculateur-temps-conduite/</loc>
+    <loc>https://projet-outils.github.io/temps-de-conduite/calculateur-temps-conduite/</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeromerinderboyer-ops.github.io/temps-de-conduite/tachygraphe-2026/</loc>
+    <loc>https://projet-outils.github.io/temps-de-conduite/tachygraphe-2026/</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeromerinderboyer-ops.github.io/temps-de-conduite/repos-hebdomadaire/</loc>
+    <loc>https://projet-outils.github.io/temps-de-conduite/repos-hebdomadaire/</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jeromerinderboyer-ops.github.io/temps-de-conduite/cabotage/</loc>
+    <loc>https://projet-outils.github.io/temps-de-conduite/cabotage/</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jeromerinderboyer-ops.github.io/temps-de-conduite/faq/</loc>
+    <loc>https://projet-outils.github.io/temps-de-conduite/faq/</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
